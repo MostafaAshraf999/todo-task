@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <title>To Do list</title>
+
+    <!-- todo tamblet   bootstrab & js link -->
+
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/all.min.css" />
+
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="w-75 vh-100 m-auto bg-info" id="app">
+      <div class="container">
+          <div class="form-group text-center">
+              <h1>Todo List</h1>
+        <div v-if="isEditing">
+          <input class="form-control" type="text" v-model="todo" />
+          <input class="form-control" type="submit" value="add" @click="storeTodo" />
+        </div>
+        <div v-else>
+          <input class="form-control" type="text" v-model="todo" />
+          <input class="form-control" type="submit" value="update" @click="updateTodo" />
+        </div>
+
+        <ol>
+          <li v-for="(todo,index) in todos">
+            {{ todo }}
+
+            <button @click="editTodo(index , todo)">Edit</button>
+            <button @click="delateTodo(index)">Delate</button>
+          </li>
+        </ol>
+          </div>
+        
+      </div>
+    </divcla>
+
+    <script src="js/vue.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+
+        data: {
+          isEditing: false,
+          slectedindex: null,
+          todo: "",
+          todos: [""],
+        },
+
+        methods: {
+          storeTodo() {
+            this.todos.push(this.todo);
+            this.todo = "";
+          },
+          editTodo(index, todo) {
+            this.todo = todo;
+            this.slectedindex = index;
+            this.isEditing = true;
+          },
+          updateTodo(todo) {
+            this.todos.splice(this.slectedindex, 1, this.todo);
+            this.isEditing = false;
+          },
+          delateTodo(index) {
+            this.todos.splice(index, 1);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
